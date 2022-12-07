@@ -1,0 +1,124 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary p-3 add-expense-button m-2 d-flex align-items-center justify-content-center ms-md-auto"
+  data-bs-toggle="modal"
+  data-bs-target="#addExpense"
+>
+  <i class="bi bi-plus-circle me-1"></i>
+  Add Expense
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="addExpense"
+  tabindex="-1"
+  aria-labelledby="addExpenseLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addExpenseLabel">Add Expense</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addExpenseForm" (ngSubmit)="onSubmit()">
+          <div class="form-group mb-3">
+            <label for="date">Date </label>
+            <input
+              type="date"
+              id="date"
+              formControlName="date"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="expenseType">Expense type </label>
+            <select class="form-select" id="expenseType" formControlName="expenseType" [(ngModel)]="showExpense">
+              <option value="expense" selected>Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+          <div class="form-group mb-3" *ngIf="showExpense=='expense'">
+            <label for="category">Category </label>
+            <select class="form-select" id="category" formControlName="category" >
+              <option value="select" selected>Select category</option>
+              <option value="Food & Drinks">Food & Drinks</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Grocery">Grocery</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+          <div class="form-group mb-3" *ngIf="showExpense=='income'">
+            <label for="category">Category </label>
+            <select class="form-select" id="category" formControlName="category" >
+              <option value="salary">Salary</option>
+              <option value="sideBusiness">Side Business</option>
+              <option value="investmentReturn">Investment Return</option>
+              <option value="others">Others</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="desc">Description </label>
+            <input
+              type="text"
+              id="desc"
+              formControlName="desc"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="amount">Amount </label>
+            <input
+              type="number"
+              id="amount"
+              formControlName="amount"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="paymentMode">Payment Mode </label>
+            <select class="form-select" id="paymentMode" formControlName="paymentMode">
+              <option value="select" selected>Select Payment Mode</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Cash">Cash</option>
+              <option value="Online Payment">Online Payment</option>
+            </select>
+          </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="addExpenseForm.invalid && addExpenseForm.touched"
+          >
+            Please enter all data correctly!
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn btn-success"
+              type="submit"
+              [disabled]="submitted()"
+              data-bs-dismiss = "modal"
+            >
+              Add Expense
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

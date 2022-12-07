@@ -1,0 +1,23 @@
+<div class="container m-auto mt-3">
+  <app-expense-chart></app-expense-chart>
+</div>
+<div
+  class="container d-flex justify-content-between m-auto flex-wrap card-data-component"
+>
+  <app-card-data [data]="montlyIncome" [isIncome]="true"></app-card-data>
+  <app-card-data [data]="expense" [isExpense]="true"></app-card-data>
+  <app-card-data [data]="balance" [isBalance]="true"></app-card-data>
+  <app-card-data [data]="transactions" [isTransaction]="true"></app-card-data>
+  <div class="d-flex justify-content-between w-100 mt-5 recent-table p-1">
+    <div class="expenses">
+      <h3>Recent Transactions</h3>
+      <app-expense-table [recentTransaction]="true"></app-expense-table>
+    </div>
+    <div class="bills">
+      <h3>Recently Added Bill</h3>
+      <app-bill-table [recentBill]="true"></app-bill-table>
+    </div>
+  </div>
+</div>
+<div>
+

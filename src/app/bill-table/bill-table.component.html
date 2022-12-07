@@ -1,0 +1,44 @@
+<div class="container mt-3" [ngStyle]="{ backgroundColor: recentBill == true ? 'aquamarine' : ''}">
+  <div class="add-expense-modal" *ngIf="!recentBill">
+    <app-add-bill (myOutput) ="getUpdatedData($event)"></app-add-bill>
+  </div>
+  <div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Category</th>
+        <th scope="col">Description</th>
+        <th scope="col">Amount</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of (recentBill? data.slice(-5).reverse() : data.reverse() | paginate: { itemsPerPage: 10, currentPage: p })" >
+        <td>
+          {{ row.dueDate }}
+        </td>
+        <td>
+          <img src="../../assets/eco-house.png" alt="" style="width: 23px;" *ngIf="row.category == 'Electricity'">
+          <img src="../../assets/mobile-transfer.png" alt="" style="width: 23px;" *ngIf="row.category == 'Mobile Payment'">
+          <img src="../../assets/faucet.png" alt="" style="width: 23px;" *ngIf="row.category == 'Water Bill'">
+          <img src="../../assets/invoice.png" alt="" style="width: 23px;" *ngIf="row.category == 'Wifi Bill'">
+          <img src="../../assets/other.png" alt="" style="width: 23px;" *ngIf="row.category == 'Others'">
+          {{ row.category }}
+        </td>
+        <td>
+          {{ row.description }}
+        </td>
+        <td class="fw-bold">
+          {{ row.amount }}
+        </td>
+        <td *ngIf="!recentBill">
+          <!-- <button class="editButton" (click)="onPaid(row)"><i class="bi bi-check-circle-fill"></i></button> -->
+          <button class="editButton" (click)="onDelete(row)"><i class="bi bi-trash3-fill"></i></button>
+        </td>
+      </tr>
+    </tbody>
+    <pagination-controls *ngIf="!recentBill" (pageChange)="p = $event"></pagination-controls>
+  </table>
+</div>
+</div>

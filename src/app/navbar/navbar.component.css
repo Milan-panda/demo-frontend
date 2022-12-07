@@ -1,0 +1,50 @@
+.navbar{
+  box-shadow: 0px 4px 10px gray;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index:999 ;
+}
+.navbar a {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.navbar-brand {
+  margin-left: 20px;
+  height: 60px;
+  width: 100px;
+}
+.navbar button {
+  background: #434ce6;
+  border-radius: 8px;
+  font-family: Open Sans;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  height: 42px;
+  width: 116px;
+  margin: 29px 20px 29px 12px;
+  border: none;
+}
+.navbar button img {
+  padding-right: 8.62px;
+}
+.navbar-toggler-icon{
+  background: url("../../assets/menu-icon.svg") no-repeat center;
+  background-size: cover;
+}
+.nav-link {
+  padding: 0;
+  margin: 0px 10px;
+}
+.notification{
+  background: none;
+  color: black;
+  border: none;
+}
+.dropdown-menu{
+  width: 20rem;
+  left: -17rem;
+}

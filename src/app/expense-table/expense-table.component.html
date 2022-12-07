@@ -1,0 +1,119 @@
+<div
+  class="container mt-3"
+  [ngStyle]="{
+    backgroundColor: recentTransaction == true ? 'antiquewhite' : ''
+  }"
+>
+  <div class="add-expense-modal" *ngIf="!recentTransaction">
+    <app-add-expense (myOutput)="getUpdatedData($event)"></app-add-expense>
+  </div>
+  <button
+    class="btn btn-primary download-pdf-button p-3 m-2 d-flex align-items-center justify-content-center"
+    (click)="onPdfDownloadModal(content)"
+    *ngIf="!recentTransaction"
+  >
+    <i class="bi bi-file-arrow-down me-1"></i>
+    Download PDF
+  </button>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Download Transactions</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-warning" role="alert" [hidden]="isFormValid">
+        Please select your preference!
+      </div>
+      <form #pdfForm="ngForm" (submit)="submitPdfForm(pdfForm)" novalidate>
+        <div class="mb-3">
+          <label class="mb-2">Select your preference:</label>
+          <div class="input-group d-block">
+            <div>
+              <input
+                type="radio"
+                id="monthly"
+                name="preference"
+                value="Monthly"
+                class="radio-button"
+                ngModel
+                required
+              />
+              <label for="monthly" class="mx-1">Monthly</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="preference"
+                id="yearly"
+                value="Yearly"
+                class="radio-button"
+                ngModel
+                required
+              />
+              <label for="yearly" class="mx-1">Yearly</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-dark">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  <div class="table-responsive">
+
+  <table class="table table-hover" #table>
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Category</th>
+        <th scope="col">Payment Mode</th>
+        <th scope="col">Description</th>
+        <th scope="col">Expense Type</th>
+        <th scope="col">Amount</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of (recentTransaction? data.slice(-5).reverse() : data.reverse()) | paginate: { itemsPerPage: 10, currentPage: p }" >
+        <td>
+          {{ row.date }}
+        </td>
+        <td>
+          <img src="../../assets/shopping.png" alt="" style="width: 23px;" *ngIf="row.category == 'Shopping'">
+          <img src="../../assets/grocery.png" alt="" style="width: 23px;" *ngIf="row.category == 'Grocery'">
+          <img src="../../assets/food.png" alt="" style="width: 23px;" *ngIf="row.category == 'Food & Drinks'">
+          <img src="../../assets/transport.png" alt="" style="width: 23px;" *ngIf="row.category == 'Transportation'">
+          <img src="../../assets/other.png" alt="" style="width: 23px;" *ngIf="row.category == 'Others'">
+          <img src="../../assets/otherIncome.png" alt="" style="width: 23px;" *ngIf="row.category != 'Others' && row.category != 'Shopping' && row.category != 'Grocery' && row.category != 'Food & Drinks' && row.category != 'Transportation'">
+          {{ row.category }}
+        </td>
+        <td>
+          {{ row.paymentMode }}
+        </td>
+        <td>
+          {{ row.description }}
+        </td>
+        <td>
+          <img src="../../assets/incomei.png" alt="" style="width: 23px;" *ngIf="row.expenseType == 'income'">
+          <img src="../../assets/expense.png" alt="" style="width: 23px;" *ngIf="row.expenseType == 'expense'">
+          {{ row.expenseType }}
+        </td>
+        <td class="fw-bold" [ngStyle]="{'color':row.expenseType=='income'?'green':'red'}">
+          {{ row.amount }}
+        </td>
+        <td *ngIf="!recentTransaction">
+          <button class="editButton" (click)="onDelete(row)"><i class="bi bi-trash3-fill"></i></button>
+        </td>
+      </tr>
+    </tbody>
+    <pagination-controls *ngIf="!recentTransaction" (pageChange)="p = $event"></pagination-controls>
+  </table>
+</div>
+
+</div>
